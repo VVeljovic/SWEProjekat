@@ -164,8 +164,8 @@ export function FilterDialog({stanja,seterStanja}) {
                             { name: 'selectedSmer' }
                         }>
                     <MenuItem value={''} key={''}></MenuItem>
-                    <MenuItem value={0} key={0}>Tražim</MenuItem>
-                    <MenuItem value={1} key={1}>Nudim</MenuItem>
+                    <MenuItem value={0} key={0}>Nudim</MenuItem>
+                    <MenuItem value={1} key={1}>Tražim</MenuItem>
                 </Select>
             </FormControl>
             </div>

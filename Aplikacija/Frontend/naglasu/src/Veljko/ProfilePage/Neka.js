@@ -55,10 +55,11 @@ const Neka = (props) =>{
   const handlerStranica = () =>{
     props.handlerIzmena();
   }
-  const { oglasNiz, trenutnaStranica,ukupanBr,filters,brojOglasa } = props.loaderData
+  const { oglasNiz, trenutnaStranica,ukupanBr,filters,brojOglasa,filterString } = props.loaderData
   if (ukupanBr != undefined)
   {
-      localStorage.setItem('naslovnaUkupanBr',ukupanBr)
+      localStorage.setItem('profilnaUkupanBr', ukupanBr)
+      localStorage.setItem('profilnaFilterString', filterString)
   }
   const [ukupanBrState, setUkupanBrState] = React.useState(ukupanBr)
   React.useEffect(() =>
@@ -68,9 +69,11 @@ const Neka = (props) =>{
                 
             if (ukupanBr == undefined)
             {
-                const localStorageUkupanBr = localStorage.getItem('naslovnaUkupanBr')
-                if (localStorageUkupanBr != undefined)
-                    setUkupanBrState(localStorageUkupanBr)
+              const localStorageUkupanBr = localStorage.getItem('profilnaUkupanBr')
+              const localStorageFilterString = localStorage.getItem('profilnaFilterString')
+              console.log('localStorageUkupanBr = '+localStorageUkupanBr)
+              if (localStorageUkupanBr != undefined&&localStorageFilterString!=undefined&&localStorageFilterString===filterString)
+                  setUkupanBrState(localStorageUkupanBr)
                 else
                 {
                     const res = await fetch('http://localhost:5105/Oglas/PrebrojiOglaseZaFiltere',         {
@@ -92,7 +95,8 @@ const Neka = (props) =>{
                         else
                         {
                             const newUkupanBr = Number.parseInt(result)
-                            localStorage.setItem('naslovnaUkupanBr',newUkupanBr)
+                            localStorage.setItem('profilnaUkupanBr', ukupanBr)
+                            localStorage.setItem('profilnaFilterString', filterString)
                             setUkupanBrState(newUkupanBr)
                         }
                     }

@@ -20,10 +20,10 @@ const ROOT_API_URL = "http://localhost:5105/"
 
 export async function naslovnaLoader({params})
 {
-    const requestUrl = ROOT_API_URL + `Oglas/VratiMtihNOglasa/${params.N != undefined ? params.N : 12}/
-    ${params.M != undefined ? params.M : 0}/${params.orderBy != undefined ? params.orderBy : 'kredit'}/
-    ${params.orderType != undefined ? params.orderType :
-            1}`
+    const requestUrl = ROOT_API_URL + `Oglas/VratiMtihNOglasa/${params.N != undefined ? params.N : 12}/`+
+    `${params.M != undefined ? params.M : 0}/${params.orderBy != undefined ? params.orderBy : 'kredit'}/`+
+        `${params.orderType != undefined ? params.orderType : 1}`
+    
     const filtersArray = params.filters != undefined ? params.filters.split('&') : []
     
     
@@ -65,6 +65,7 @@ export async function naslovnaLoader({params})
             })
     if (response1.ok)
     {
+        //console.log(requestUrl)
             const response1JSON = await response1.json()
             const oglasi = response1JSON.lista
         const ukupanBr = response1JSON.ukupanBr
@@ -74,7 +75,8 @@ export async function naslovnaLoader({params})
             trenutnaStranica: params.M !== undefined ? Number.parseInt(params.M) : 0,
             filters:(M)=>`${params.N != undefined ? params.N : 12}/${M}/${params.orderBy != undefined ? params.orderBy : 'kredit'}/`+
                 `${params.orderType != undefined ? params.orderType : 1}${params.filters != undefined ? ('/' + params.filters) : ''}`,
-            brojOglasa:params.N!=undefined?Number.parseInt(params.N):12
+            brojOglasa: params.N != undefined ? Number.parseInt(params.N) : 12,
+            filterString:(params.filters!=undefined?params.filters:'/')
         }
     }
     else
@@ -89,11 +91,14 @@ export async function naslovnaLoader({params})
 export default function Naslovna()
 {
     const { connectionState, setConnectionState, handleMsgRcv, handleContractUpdate } = React.useContext(ConnectionContext)
-    const { oglasNiz, trenutnaStranica,ukupanBr,filters,brojOglasa } = useLoaderData()
+    const { oglasNiz, trenutnaStranica,ukupanBr,filters,brojOglasa,filterString} = useLoaderData()
     if (ukupanBr != undefined)
     {
-        localStorage.setItem('naslovnaUkupanBr',ukupanBr)
+        localStorage.setItem('naslovnaUkupanBr', ukupanBr)
+        localStorage.setItem('filterString', filterString)
     }
+    //console.log('ukupanBr = '+ukupanBr)
+    
         
     const [ukupanBrState,setUkupanBrState] = React.useState(ukupanBr)
     
@@ -113,7 +118,9 @@ export default function Naslovna()
             if (ukupanBr == undefined)
             {
                 const localStorageUkupanBr = localStorage.getItem('naslovnaUkupanBr')
-                if (localStorageUkupanBr != undefined)
+                const localStorageFilterString = localStorage.getItem('filterString')
+                //console.log('localStorageUkupanBr = '+localStorageUkupanBr)
+                if (localStorageUkupanBr != undefined&&localStorageFilterString!=undefined&&localStorageFilterString===filterString)
                     setUkupanBrState(localStorageUkupanBr)
                 else
                 {
@@ -136,7 +143,9 @@ export default function Naslovna()
                         else
                         {
                             const newUkupanBr = Number.parseInt(result)
-                            localStorage.setItem('naslovnaUkupanBr',newUkupanBr)
+                            //console.log('newUkupanBr = '+newUkupanBr)
+                            localStorage.setItem('naslovnaUkupanBr', newUkupanBr)
+                            localStorage.setItem('filterString',filterString)
                             setUkupanBrState(newUkupanBr)
                         }
                     }

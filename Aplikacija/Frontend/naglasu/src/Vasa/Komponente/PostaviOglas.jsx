@@ -200,9 +200,9 @@ const PostaviOglas = () => {
     }
 
     formData.append('Ime', nazivOglasa);
-    if(odabranaKategorija === '4'){
+    if(odabranaKategorija === '1'){
 
-      formData.append('PodkategorijaId', 4);
+      formData.append('PodkategorijaId', 1);
 
       formData.append('KategorijaId', odabranaKategorija);
 
@@ -244,8 +244,8 @@ const PostaviOglas = () => {
     }
 
     formData.append('Kredit', kredit);
-    formData.append('Smer', 0);
-    formData.append('Tip', 0);
+    formData.append('Smer', smerOglasa);
+    formData.append('Tip', tipOglasa);
     formData.append('Cena', cena);
     formData.append('Kolicina', kolicina);
 
@@ -579,7 +579,7 @@ function handlePremium() {
         
         {
 
-      (odabranaKategorija !== 'nijeIzabrana' && odabranaKategorija != 4) && (
+      (odabranaKategorija !== 'nijeIzabrana' && odabranaKategorija !== '1') && (
            <div className="form-group">
              <h3>Popunite polja kategorije!</h3>
              {skupiPoljaKategorije().map(polje => {
@@ -592,7 +592,7 @@ function handlePremium() {
                     className="svi-isti input-textarea"
                     value={polje.vrednost}
                     onChange={(e) => handlePoljeChange(e, polje.naziv)}
-                    required
+                    
                   />
                 </div>
               )
@@ -603,7 +603,7 @@ function handlePremium() {
         
         {
 
-      (odabranaKategorija !== 'nijeIzabrana' && odabranaKategorija != 4) && (
+      (odabranaKategorija !== 'nijeIzabrana' && odabranaKategorija !== '1') && (
           <div className="form-group">
             <label className="labell" htmlFor="podkategorija">Podkategorija:</label>
             <select

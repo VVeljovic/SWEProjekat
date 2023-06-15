@@ -19,7 +19,7 @@ const KarticaOglasNova = (props)=>{
         <div className="meal-content"  style={{ backgroundColor: props.oglas.kredit !== 0 ? "#FFEFB7" : "white" }}>
           <div className="meal-tags">
             <span className="tag tag--vegetarian">Kategorija {props.oglas.podkategorija.kategorijaNaziv}</span>
-           {(props.oglas.kolicina===0 && props.oglas.tip ==0) && <span className="tag tag--vegetarian" style={{backgroundColor:"red"}}>Rasprodato </span>}
+           {(props.oglas.kolicina===0 && props.oglas.tip ==0 ) && <span className="tag tag--vegetarian" style={{backgroundColor:"red"}}>Rasprodato </span>}
           </div>
           <p className="meal-title">{props.oglas.ime}</p>
           <ul className="meal-attributes">

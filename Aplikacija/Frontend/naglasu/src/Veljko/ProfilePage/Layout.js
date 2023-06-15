@@ -39,9 +39,12 @@ export function layoutLoader({ params })
   const userState = localStorage.getItem('userState')
   const userStateObj = JSON.parse(userState)
   if (params.filters == undefined)
-      params.filters=''
+
+  params.filters = ''
+
+if (!params.filters.includes(`&userId=${userStateObj.id}`))
+
   params.filters += `&userId=${userStateObj.id}`
-  //console.log(params.filtersArray)
   return oglasiLoader({params})
 }
 

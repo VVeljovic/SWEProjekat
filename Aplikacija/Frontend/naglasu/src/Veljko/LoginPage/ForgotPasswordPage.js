@@ -66,7 +66,10 @@ const ForgotPassword = (props) => {
         return odgovor.text();
       })
       .then((odgovorTekst) => {
-        console.log(odgovorTekst);
+        setErrorPop({
+          title:"Lozinka je promenjena.",
+          message:""
+         });
       })
       .catch((error) => {
         console.log(error);
